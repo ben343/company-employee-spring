@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style> input[type=text], input[type=date], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+div {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+</style>
+<style>
+    .styled-table {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        font-family: sans-serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .styled-table thead tr {
+        background-color: #009879;
+        color: #ffffff;
+        text-align: left;
+    }
+
+    .styled-table th,
+    .styled-table td {
+        padding: 12px 15px;
+    }
+
+    .styled-table tbody tr {
+        border-bottom: 1px solid #dddddd;
+    }
+
+    .styled-table tbody tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+    }
+
+    .styled-table tbody tr:last-of-type {
+        border-bottom: 2px solid #009879;
+    }
+
+    .styled-table tbody tr.active-row {
+        font-weight: bold;
+        color: #009879;
+    }
+</style>
+<body>
+<a href="/">Home</a>
+All Employees:
+<table class="styled-table thead tr">
+    <tr>
+
+        <th>name</th>
+        <th>surname</th>
+        <th>email</th>
+        <th>phone number</th>
+        <th>salary</th>
+        <th>position</th>
+        <th>company name</th>
+    </tr>
+    <tr th:each="employee :${employees}">
+        <td th:text="${employee.name}"></td>
+        <td th:text="${employee.surname}"></td>
+        <td th:text="${employee.email}"></td>
+        <td th:text="${employee.phone_Number}"></td>
+        <td th:text="${employee.salary}"></td>
+        <td th:text="${employee.position}"></td>
+        <td th:text="${employee.company.name}"></td>
+        <td>
+        </td>
+
+    </tr>
+
+</table>
+<br>
+AddEmployee
+<div  style="width: 50%; float: left ">
+<form action="/addEmployee" method="post"><br>
+    name:<input type="text" name="name"><br>
+    surname:<input type="text" name="surname"><br>
+    email: <input type="text" name="email"><br>
+    phoneNumber <input type="text" name="phone_Number"><br>
+    salary: <input type="text" name="salary"><br>
+    position <input type="text" name="position"><br>
+
+    <select name="company">
+        <option
+                th:each="company:${companies}"
+                th:text="${company.name}" th:value="${company.id}">
+        </option>
+        <input type="submit" name="add">
+    </select>
+</form>
+</div>
+</body>
+</html>

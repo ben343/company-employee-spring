@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<style> input[type=text], input[type=date], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+div {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+</style>
+<style>
+    .styled-table {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        font-family: sans-serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .styled-table thead tr {
+        background-color: #009879;
+        color: #ffffff;
+        text-align: left;
+    }
+
+    .styled-table th,
+    .styled-table td {
+        padding: 12px 15px;
+    }
+
+    .styled-table tbody tr {
+        border-bottom: 1px solid #dddddd;
+    }
+
+    .styled-table tbody tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+    }
+
+    .styled-table tbody tr:last-of-type {
+        border-bottom: 2px solid #009879;
+    }
+
+    .styled-table tbody tr.active-row {
+        font-weight: bold;
+        color: #009879;
+    }
+</style>
+</body>
+AllCompany
+<a href="/">Home</a>
+<table class="styled-table thead tr">
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>size</th>
+        <th>address</th>
+        <th>Action</th>
+    </tr>
+    <tr>
+    <tr th:each="company:${companies}">
+        <td th:text="${company.id}"></td>
+        <td th:text="${company.getName()}"></td>
+        <td th:text="${company.getSize()}"></td>
+        <td th:text="${company.getAddress()}"></td>
+        <td><a th:href="@{'/deleteCompany/'+ ${company.id}}">delete </a></td>
+    </tr>
+    </tr>
+
+</table>
+
+addCompany
+<div style="width: 50%; float: left ">
+    <form action="/addCompany" method="post">
+        <input type="text" name="name" placeholder="name"><br>
+        <input type="number" name="size" placeholder="size"><br>
+        <input type="text" name="address" placeholder="address"><br>
+        <input type="submit" name="add">
+    </form>
+
+
+</div>
+
+</html>
