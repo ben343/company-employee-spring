@@ -24,6 +24,7 @@ public class Employee {
     private String phone_Number;
     private double salary;
     private String position;
+    private String picUrl;
     @ManyToOne(fetch = FetchType.EAGER)
     private Company company;
 
