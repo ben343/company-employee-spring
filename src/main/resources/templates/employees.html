@@ -75,19 +75,23 @@ div {
     }
 </style>
 <body>
-<a href="/">Home</a>
-All Employees:
+<a href="?lang=en">English</a> |
+<a href="?lang=ru">Russian</a> |
+<a href="?lang=hy">Armenian</a><br><br>
+<a href="/" th:text="#{home}"></a>
+<h3 th:text="#{employees}"></h3>
 <table class="styled-table thead tr">
     <tr>
 
-        <th>name</th>
-        <th>surname</th>
-        <th>email</th>
-        <th>phone number</th>
-        <th>salary</th>
-        <th>position</th>
-        <th>company name</th>
-        <th>images</th>
+        <th th:text="#{name}"></th>
+        <th th:text="#{surname}"></th>
+        <th th:text="#{email}"></th>
+        <th th:text="#{phone.number}"></th>
+        <th th:text="#{salary}"></th>
+        <th th:text="#{position}"></th>
+        <th th:text="#{company}"></th>
+        <th th:text="#{picture}"></th>
+
     </tr>
     <tr th:each="employee :${employees}">
         <td th:text="${employee.name}"></td>
@@ -109,16 +113,15 @@ All Employees:
 
 </table>
 <br>
-AddEmployee
+<h2 title="AddEmployee" th:text="#{add.employee}"> AddEmployee </h2>
 <div style="width: 50%; float: left ">
     <form action="/addEmployee" method="post" enctype="multipart/form-data"><br>
-        name:<input type="text" name="name"><br>
-        surname:<input type="text" name="surname"><br>
-        email: <input type="text" name="email"><br>
-        phoneNumber <input type="text" name="phone_Number"><br>
-        salary: <input type="text" name="salary"><br>
-        position <input type="text" name="position"><br>
-        images< <input type="file" name="image"><br>
+        <input type="text" name="name" th:text="#{name}" placeholder="name"><br>
+        <input type="text" name="surname" th:text="#{surname}" placeholder="surname"><br>
+        <input type="text" name="email" th:text="#{email}" placeholder="email"><br><br>
+        <input type="text" name="salary" th:text="#{salary}" placeholder="salary"><br>
+        <input type="text" name="position" th:text="#{position}" placeholder="position"><br>
+        <input type="file" name="picture" th:text="#{picture}" placeholder="picture"><br>
 
         <select name="company">
             <option

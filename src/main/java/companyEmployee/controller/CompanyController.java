@@ -1,9 +1,8 @@
 package companyEmployee.controller;
-
+import companyEmployee.Service.CompanyService;
+import companyEmployee.Service.EmployeeService;
 import companyEmployee.enttity.Company;
-import companyEmployee.repositiry.CompanyRepository;
-import companyEmployee.repositiry.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,26 +10,25 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
+
 
 @Controller
+@RequiredArgsConstructor
 public class CompanyController {
-    @Autowired
-    private CompanyRepository companyRepository;
-    @Autowired
-    private EmployeeRepository employeeRepository;
+
+    private final CompanyService companyService;
+    private  final EmployeeService employeeService;
 
     @GetMapping("/companies")
-    public String main(ModelMap map) {
-        List<Company> companies = companyRepository.findAll();
-        map.addAttribute("companies", companies);
+    public String findAllCompany(ModelMap map) {
+        map.addAttribute("companies", companyService.findAll());
         return "companies";
     }
 
     @GetMapping("/deleteCompany/{id}")
     public String deleteCompany(@PathVariable("id") int id) {
-        employeeRepository.deleteEmployeeByCompanyId(id);
-        companyRepository.deleteById(id);
+        employeeService.deleteEmployeesByCompany_Id(id);
+        companyService.deleteCompany(id);
         return "redirect:/companies";
 
     }
@@ -44,7 +42,7 @@ public class CompanyController {
 
     @PostMapping("/addCompany")
     public String addCompany(@ModelAttribute Company company) {
-        companyRepository.save(company);
+        companyService.save(company);
         return "redirect:/companies";
     }
 
