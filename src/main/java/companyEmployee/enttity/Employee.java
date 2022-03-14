@@ -25,6 +25,10 @@ public class Employee {
     private double salary;
     private String position;
     private String picUrl;
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
     @ManyToOne(fetch = FetchType.EAGER)
     private Company company;
 

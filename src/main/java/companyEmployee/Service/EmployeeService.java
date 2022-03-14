@@ -1,10 +1,12 @@
 package companyEmployee.Service;
 
 import companyEmployee.enttity.Employee;
+import companyEmployee.enttity.Role;
 import companyEmployee.repositiry.CompanyRepository;
 import companyEmployee.repositiry.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +23,7 @@ public class EmployeeService {
 
     private final CompanyRepository companyRepository;
     private final EmployeeRepository employeeRepository;
+    private  final PasswordEncoder passwordEncoder;
 
     @Value("${employee.upload.path}")
     public String imagePath;
@@ -29,6 +32,7 @@ public class EmployeeService {
     public List<Employee> findAll() {
         return employeeRepository.findAll();
     }
+
 
     public void addEmployee(@ModelAttribute Employee employee,
                             @RequestParam("image") MultipartFile uploadedFile) throws IOException {
@@ -40,6 +44,8 @@ public class EmployeeService {
 
 
         }
+        employee.setPassword(passwordEncoder.encode(employee.getPassword()));
+        employee.setRole(Role.USER);
         employeeRepository.save(employee);
     }
 

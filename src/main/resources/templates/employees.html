@@ -79,6 +79,9 @@ div {
 <a href="?lang=ru">Russian</a> |
 <a href="?lang=hy">Armenian</a><br><br>
 <a href="/" th:text="#{home}"></a>
+<a th:if="${currentUser == null}" href="/login" th:text="#{login}"></a>
+
+<a th:if="${currentUser!= null && currentUser.employee.role.name().equals('ADMIN')}" href="/register" th:text="#{add.employee}"></a>
 <h3 th:text="#{employees}"></h3>
 <table class="styled-table thead tr">
     <tr>
@@ -90,7 +93,7 @@ div {
         <th th:text="#{salary}"></th>
         <th th:text="#{position}"></th>
         <th th:text="#{company}"></th>
-        <th th:text="#{picture}"></th>
+        <th th:text="#{image}"></th>
 
     </tr>
     <tr th:each="employee :${employees}">
@@ -101,6 +104,8 @@ div {
         <td th:text="${employee.salary}"></td>
         <td th:text="${employee.position}"></td>
         <td th:text="${employee.company.name}"></td>
+
+
         <td><img th:if="${employee.picUrl != null}" th:src="@{/getImage(picName=${employee.picUrl})}" width="100"
                  height="100"/>
             <img th:if="${employee.picUrl==null}" src="/img.png" width="100" height="100">
@@ -112,25 +117,6 @@ div {
     </tr>
 
 </table>
-<br>
-<h2 title="AddEmployee" th:text="#{add.employee}"> AddEmployee </h2>
-<div style="width: 50%; float: left ">
-    <form action="/addEmployee" method="post" enctype="multipart/form-data"><br>
-        <input type="text" name="name" th:text="#{name}" placeholder="name"><br>
-        <input type="text" name="surname" th:text="#{surname}" placeholder="surname"><br>
-        <input type="text" name="email" th:text="#{email}" placeholder="email"><br><br>
-        <input type="text" name="salary" th:text="#{salary}" placeholder="salary"><br>
-        <input type="text" name="position" th:text="#{position}" placeholder="position"><br>
-        <input type="file" name="picture" th:text="#{picture}" placeholder="picture"><br>
 
-        <select name="company">
-            <option
-                    th:each="company:${companies}"
-                    th:text="${company.name}" th:value="${company.id}">
-            </option>
-            <input type="submit" name="add">
-        </select>
-    </form>
-</div>
 </body>
 </html>

@@ -4,9 +4,10 @@ package companyEmployee.controller;
 import companyEmployee.Service.CompanyService;
 import companyEmployee.Service.EmployeeService;
 import companyEmployee.enttity.Employee;
-import companyEmployee.repositiry.EmployeeRepository;
+import companyEmployee.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,18 +24,31 @@ import java.util.List;
 public class EmployeeController {
 
 
-   private  final   EmployeeService employeeService;
-  private  final    CompanyService companyService;
+    private final EmployeeService employeeService;
+    private final CompanyService companyService;
 
     @Value("${employee.upload.path}")
     public String imagePath;
 
     @GetMapping("/employees")
-    public String allEmployees(ModelMap map) {
+    public String allEmployees(ModelMap map, @AuthenticationPrincipal CurrentUser currentUser) {
         List<Employee> employees = employeeService.findAll();
         map.addAttribute("employees", employees);
+        map.addAttribute("currentUser", currentUser);
         map.addAttribute("companies", companyService.findAll());
         return "employees";
+    }
+
+    @GetMapping("/successLogin")
+    public String successLogin() {
+        return "redirect:/employees";
+    }
+
+    @GetMapping("/register")
+    public String register(ModelMap map, @AuthenticationPrincipal CurrentUser currentUser) {
+        map.addAttribute("currentUser", currentUser);
+        map.addAttribute("companies", companyService.findAll());
+        return "register";
     }
 
 
@@ -42,9 +56,10 @@ public class EmployeeController {
     public String addEmployees(@ModelAttribute Employee employee,
                                @RequestParam("image") MultipartFile uploadedFile) throws IOException {
 
-        employeeService.addEmployee(employee,uploadedFile);
+        employeeService.addEmployee(employee, uploadedFile);
         return "redirect:/employees";
     }
 
 }
 
+;
