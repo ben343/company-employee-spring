@@ -81,7 +81,7 @@ div {
 <a href="/" th:text="#{home}"></a>
 <a th:if="${currentUser == null}" href="/login" th:text="#{login}"></a>
 
-<a th:if="${currentUser!= null && currentUser.employee.role.name().equals('ADMIN')}" href="/register" th:text="#{add.employee}"></a>
+<a th:if="${currentUser!= null && currentUser.employee.role.name().equals('ADMIN')}" href="/index" th:text="#{add.employee}"></a>
 <h3 th:text="#{employees}"></h3>
 <table class="styled-table thead tr">
     <tr>

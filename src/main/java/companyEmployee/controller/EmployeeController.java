@@ -3,10 +3,13 @@ package companyEmployee.controller;
 
 import companyEmployee.Service.CompanyService;
 import companyEmployee.Service.EmployeeService;
+import companyEmployee.Service.MailService;
 import companyEmployee.enttity.Employee;
 import companyEmployee.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,6 +29,8 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
     private final CompanyService companyService;
+    private final MailService mailService;
+
 
     @Value("${employee.upload.path}")
     public String imagePath;
@@ -57,6 +62,7 @@ public class EmployeeController {
                                @RequestParam("image") MultipartFile uploadedFile) throws IOException {
 
         employeeService.addEmployee(employee, uploadedFile);
+        mailService.sendMail(employee.getEmail(), "Welcome" + employee.getSurname(), "welcome" + employee.getName());
         return "redirect:/employees";
     }
 
